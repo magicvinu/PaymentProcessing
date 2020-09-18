@@ -27,3 +27,9 @@ entity PAYMENT_RECORD{
 ORDER "1" --> "0..N" PAYMENT_RECORD: "One ORDER can have multiple PAYMENT_RECORD"
 PAYMENT_RECORD "1" --> "1" PAYMENT_METHOD
 @enduml
+
+Notes:
+1. It will be security risk if we store Credit card number as plain text. We need to store it as an encrypted string in column ENCRYPTED_CREDIT_CARD.
+We have to use Symetric key to encrypt and decrypt the card number. The key can be stord in key vault so it cannot be be read by anyone except the application.
+2. Services using oAuth2 standard must not store AUTHCODE as plain text. Plain AUTHCODE can be exchange with authorization provder for access token. 
+This will be a security risk, it is better to store it as an encrypted string in column. ENCRYPTED_AUTHCODE 
