@@ -1,0 +1,29 @@
+@startuml
+entity ORDER {
+  * ORDER_ID number <<generated>>
+  --
+  * TOTAL_AMOUNT DECIMAL(13, 2)
+
+}
+ 
+entity PAYMENT_METHOD{
+  * PAYMENT_METHOD_ID number <<generated>>
+  --
+  * ENCRYPTED_CREDIT_CARD VARCHAR
+  * ADDRESS VARCHAR
+
+}
+
+entity PAYMENT_RECORD{
+  * PAYMENT_RECORD_ID number <<generated>>
+  --
+  * PAYMENT_METHOD_ID 
+  * ORDER_ID 
+  * STATUS ENUM('SUCCESS', 'FAIL', 'DECLINE')
+  * AUTHCODE VARCHAR (UNIQUE)
+  * PROCESS_DATETIME TIMESTAMP
+
+}
+ORDER "1" --> "0..N" PAYMENT_RECORD: "One ORDER can have multiple PAYMENT_RECORD"
+PAYMENT_RECORD "1" --> "1" PAYMENT_METHOD
+@enduml
