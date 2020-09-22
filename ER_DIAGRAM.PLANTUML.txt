@@ -1,0 +1,45 @@
+@startuml
+entity CLIENT{
+  * CLIENT_ID number <<generated>>
+  --
+  * CLIENT_NAME VARCHAR
+  * VIOLATOR BOOLEAN DEFAULT FALSE
+
+}
+entity ORDER {
+  * ORDER_ID number <<generated>>
+  --
+  * CLIENT_ID number (FOREIGN KEY CLIENT)
+  * PAYMENT_METHOD_ID number (FOREIGN KEY PAYMENT_METHOD)
+  * TOTAL_AMOUNT DECIMAL(13, 2)
+  * ENCRYPTED_AUTHCODE VARCHAR (UNIQUE)
+
+}
+
+entity PAYMENT_METHOD{
+  * PAYMENT_METHOD_ID number <<generated>>
+  --
+  * ENCRYPTED_CREDIT_CARD VARCHAR
+  * ADDRESS VARCHAR
+  * STATUS ENUM('ACTIVE','INACTIVE')
+}
+
+entity PAYMENT_RECORD{
+  * PAYMENT_RECORD_ID number <<generated>>
+  --
+  * ORDER_ID number (FOREIGN KEY ORDER)
+  * STATUS ENUM('ACTIVE','SUCCESS', 'FAIL', 'DECLINE')
+  * PROCESS_DATETIME TIMESTAMP
+
+}
+
+CLIENT "1" --> "0..N" ORDER : "One ORDER can have multiple ORDER"
+ORDER "1" --> "0..N" PAYMENT_RECORD: "One ORDER can have multiple PAYMENT_RECORD"
+ORDER "1" --> "1" PAYMENT_METHOD
+@enduml
+
+Notes:
+1. It will be security risk if we store Credit card number as plain text. We need to store it as an encrypted string in column ENCRYPTED_CREDIT_CARD.
+We have to use Symetric key to encrypt and decrypt the card number. The key can be stord in key vault so it cannot be be read by anyone except the application.
+2. Services using oAuth2 standard must not store AUTHCODE as plain text. Plain AUTHCODE can be exchange with authorization provder for access token.
+This will be a security risk, it is better to store it as an encrypted string in column. ENCRYPTED_AUTHCODE
