@@ -1,0 +1,19 @@
+@startuml
+Client -> PaymentProcess : /processPayments/{clientId}
+PaymentProcess -> PaymentProcess : Check if client available
+alt If client not available
+Client <- PaymentProcess : Client not found
+end alt
+PaymentProcess -> PaymentProcess : Find list of unpaid orders for the client
+alt If no unpaid orders to process
+Client <- PaymentProcess : No pending orders for the client id
+end alt
+PaymentProcess -> PaymentProcess : Check if client is a violator
+alt if client is a violator
+Client <- PaymentProcess : Client id is a violator
+end alt
+PaymentProcess -> PaymentProcess : Process unpaid orders.
+PaymentProcess -> ThirdPartyPaymentService: Call ThirdPartyPaymentService to process unpaid orders
+PaymentProcess <- ThirdPartyPaymentService: (SUCCESS, FAIL, DECLINE)
+Client <- PaymentProcess : Response
+@enduml

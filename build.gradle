@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com.nexus'
@@ -13,7 +14,10 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
-
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/jacoco")
+}
 repositories {
 	mavenCentral()
 }
@@ -35,4 +39,27 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+
+	def jacocoExclude = ['com/nexus/payment/processing/model/**', 'com/nexus/payment/processing/dto/**']
+
+	jacocoTestReport {
+		afterEvaluate {
+			getClassDirectories().setFrom(classDirectories.files.collect {
+				fileTree(dir: it, exclude: jacocoExclude)
+			})
+		}
+	}
+
+	jacocoTestCoverageVerification {
+		afterEvaluate {
+			getClassDirectories().setFrom(classDirectories.files.collect {
+				fileTree(dir: it, exclude: jacocoExclude)
+			})
+		}
+	}
+}
+jacocoTestReport {
+	dependsOn test
+
 }
