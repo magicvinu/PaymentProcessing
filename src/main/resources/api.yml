@@ -1,0 +1,140 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v1"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /processPayments/{clientId}:
+    post:
+      tags:
+        - "PaymentProcessing"
+      summary: "Process Payment for a given client"
+      description: ""
+      operationId: "processPayments"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          type: number
+          name: "clientId"
+          description: "Client id for which Payment needs to be processed"
+          required: true
+      responses:
+        '202':
+          description: Process completed
+          schema:
+            type: object
+            properties:
+              response:
+                type: "string"
+                enum:
+                  - "SUCCESS"
+                  - "VIOLATOR"
+                  - "NO_RECORDS"
+                example: 'SUCCESS'
+              orderDetails:
+                type: array
+                items:
+                  $ref: "#/definitions/orderDetail"
+        '404':
+          description: Client not found.
+          schema:
+            type: object
+            properties:
+              timestamp:
+                type: "string"
+                example: "2020-09-24T21:41:39.231"
+              message:
+                type: "string"
+                example: "Client not found, Client with Id 10 not found"
+        '422':
+          description: "Unable to prcess request"
+          schema:
+            type: object
+            properties:
+              timestamp:
+                type: "string"
+                example: "2020-09-24T21:41:39.231"
+              message:
+                type: "string"
+                example: "Client is a violator, Client with Id 6 have multiple payment record and marked as violator"
+        '500':
+          description: Error processing
+          schema:
+            type: object
+            properties:
+              timestamp:
+                type: "string"
+                example: "2020-09-24T21:41:39.231"
+              error:
+                type: "string"
+                example: "Error processing request"
+
+  /orderDetails/{clientId}:
+    post:
+      tags:
+        - "PaymentProcessing"
+      summary: "Process Payment for a given client"
+      description: ""
+      operationId: "processPayments"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          type: number
+          name: "clientId"
+          description: "Client id for which Payment needs to be processed"
+          required: true
+      responses:
+        '202':
+          description: Order details
+          schema:
+            type: object
+            properties:
+              orderDetails:
+                type: array
+                items:
+                  $ref: "#/definitions/orderDetail"
+definitions:
+  orderDetail:
+    type: "object"
+    properties:
+      clientId:
+        type: "integer"
+        format: "int64"
+      paymentRecordId:
+        type: "integer"
+        format: "int64"
+      orderId:
+        type: "integer"
+        format: "int64"
+      clientName:
+        type: "string"
+      totalAmount:
+        type: "number"
+        example: 29.18
+      paymentRecordStatus:
+        type: "string"
+        enum:
+          - "SUCCESS"
+          - "FAIL"
+          - "DECLINE"
+        example: 'DECLINE'
+      processDate:
+        type: "string"
+        example: '2020-09-22 08:48:04.501'
