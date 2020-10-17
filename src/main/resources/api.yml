@@ -89,7 +89,7 @@ paths:
         - "PaymentProcessing"
       summary: "Process Payment for a given client"
       description: ""
-      operationId: "processPayments"
+      operationId: "orderDetails"
       consumes:
         - "application/json"
       produces:
