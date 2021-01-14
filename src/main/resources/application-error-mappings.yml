@@ -1,0 +1,20 @@
+error-mappings:
+  error-metadata-list:
+    - category: 500
+      code: E0001
+      source: SOURCE1
+      severity: HIGH
+      type: ERROR
+      message: Error occurred in Source1
+    - category: 400
+      code: E0002
+      source: SOURCE2
+      severity: LOW
+      type: ERROR
+      message: User input error
+    - category: 404
+      code: CLIENT_NOT_FOUND_ERROR
+      source: DATABASE
+      severity: MEDIUM
+      type: ERROR
+      message: Request client not found
