@@ -25,7 +25,7 @@ public class LamdasExamples {
         lamdasExamples.sumInDifferentWays();
         lamdasExamples.totalCroupByDishType();
         lamdasExamples.groupByDishType();
-        lamdasExamples.populateDishTagsGroupByDishTypeUsingJava9();
+//        lamdasExamples.populateDishTagsGroupByDishTypeUsingJava9();
         lamdasExamples.groupByDishTypeWithName();
         lamdasExamples.groupIsVegetarianAndByDishType();
         lamdasExamples.groupByDishTypeAndIsVegetarian();
@@ -36,7 +36,7 @@ public class LamdasExamples {
         lamdasExamples.averageOrSummarizingCalories();
         lamdasExamples.noOfDishesUsingMapAndReduce();
         lamdasExamples.countingNumberOfDish();
-        lamdasExamples.groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9();
+//        lamdasExamples.groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9();
         lamdasExamples.findDishWithHighestCaloriesPartitionByVegetarian();
         lamdasExamples.countByVegetarian();
         lamdasExamples.primeNumbers();
@@ -60,31 +60,31 @@ public class LamdasExamples {
 //        groupByDishTypeWithName ==> {FISH=[prawns, salmon], OTHER=[french fries, rice, season fruit, pizza, Water], MEAT=[pork, beef, chicken]}
     }
 
-    private void populateDishTagsGroupByDishTypeUsingJava9() {
-
-        Map<Dish.Type, List<Dish>> groupMenuBasedOnDishType = menu.stream().collect(groupingBy(Dish::getType));
-        System.out.println("groupMenuBasedOnDishType ==> " + groupMenuBasedOnDishType);
-        // groupMenuBasedOnDishType ==> {FISH=[prawns, salmon], MEAT=[pork, beef, chicken], OTHER=[french fries, rice, season fruit, pizza, Water]}
-
-        Map<Dish.Type, Set<Object>>  groupMenuBasedOnDishTypeMappedToDishTags = menu.stream().collect(groupingBy(Dish::getType,
-        mapping(dish -> dishTags.get( dish.getName() ),
-        toSet())));
-        System.out.println("groupMenuBasedOnDishTypeMappedToDishTags ==> " + groupMenuBasedOnDishTypeMappedToDishTags);
-        // groupMenuBasedOnDishTypeMappedToDishTags ==>
-        // {FISH=[[tasty, roasted], [delicious, fresh]], MEAT=[[fried, crisp], [salty, roasted], [greasy, salty]],
-        // OTHER=[[light, natural], [tasty, salty], [greasy, fried], [fresh, natural], [fresh]]}
-
-//        java 9
-        Map<Dish.Type, Set<String>> dishNamesByType =
-        menu.stream()
-                        .collect(groupingBy(Dish::getType,
-        flatMapping(dish -> dishTags.get( dish.getName() ).stream(),
-        toSet())));
-        System.out.println("populateDishTagsGroupByDishTypeUsingJava9 ==> " + dishNamesByType);
-        // populateDishTagsGroupByDishTypeUsingJava9 ==> {FISH=[roasted, tasty, fresh, delicious], MEAT=[salty, greasy, roasted, fried, crisp],
-        //    OTHER=[salty, greasy, natural, light, tasty, fresh, fried]}
-
-    }
+//    private void populateDishTagsGroupByDishTypeUsingJava9() {
+//
+//        Map<Dish.Type, List<Dish>> groupMenuBasedOnDishType = menu.stream().collect(groupingBy(Dish::getType));
+//        System.out.println("groupMenuBasedOnDishType ==> " + groupMenuBasedOnDishType);
+//        // groupMenuBasedOnDishType ==> {FISH=[prawns, salmon], MEAT=[pork, beef, chicken], OTHER=[french fries, rice, season fruit, pizza, Water]}
+//
+//        Map<Dish.Type, Set<Object>>  groupMenuBasedOnDishTypeMappedToDishTags = menu.stream().collect(groupingBy(Dish::getType,
+//        mapping(dish -> dishTags.get( dish.getName() ),
+//        toSet())));
+//        System.out.println("groupMenuBasedOnDishTypeMappedToDishTags ==> " + groupMenuBasedOnDishTypeMappedToDishTags);
+//        // groupMenuBasedOnDishTypeMappedToDishTags ==>
+//        // {FISH=[[tasty, roasted], [delicious, fresh]], MEAT=[[fried, crisp], [salty, roasted], [greasy, salty]],
+//        // OTHER=[[light, natural], [tasty, salty], [greasy, fried], [fresh, natural], [fresh]]}
+//
+////        java 9
+//        Map<Dish.Type, Set<String>> dishNamesByType =
+//        menu.stream()
+//                        .collect(groupingBy(Dish::getType,
+//        flatMapping(dish -> dishTags.get( dish.getName() ).stream(),
+//        toSet())));
+//        System.out.println("populateDishTagsGroupByDishTypeUsingJava9 ==> " + dishNamesByType);
+//        // populateDishTagsGroupByDishTypeUsingJava9 ==> {FISH=[roasted, tasty, fresh, delicious], MEAT=[salty, greasy, roasted, fried, crisp],
+//        //    OTHER=[salty, greasy, natural, light, tasty, fresh, fried]}
+//
+//    }
 
     private void totalCroupByDishType() {
         System.out.println("totalCroupByDishType ==> " +
@@ -139,16 +139,16 @@ public class LamdasExamples {
 //        group by Dish type and counting => {FISH=2, OTHER=5, MEAT=3}
     }
 
-    private void groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9() {
-        // java 9
-        Map<Dish.Type, List<Dish>> groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 =
-                menu.stream()
-                        .collect(groupingBy(Dish::getType,
-                                filtering(dish -> dish.getCalories() > 500, toList())));
-        System.out.println("groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 => " + groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 );
-//        {OTHER=[french fries, pizza], MEAT=[pork, beef], FISH=[]}
-
-    }
+//    private void groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9() {
+//        // java 9
+//        Map<Dish.Type, List<Dish>> groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 =
+//                menu.stream()
+//                        .collect(groupingBy(Dish::getType,
+//                                filtering(dish -> dish.getCalories() > 500, toList())));
+//        System.out.println("groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 => " + groupDishesWithDishTypeWithMoreThan500CaloriesUsingJava9 );
+////        {OTHER=[french fries, pizza], MEAT=[pork, beef], FISH=[]}
+//
+//    }
 
     private void findDishWithHighestCaloriesPartitionByVegetarian() {
 //        Map implementation returned by

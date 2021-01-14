@@ -1,7 +1,7 @@
 package com.nexus.payment.processing.dao.impl;
 
 import com.nexus.payment.processing.dao.PaymentProcessDao;
-import com.nexus.payment.processing.exception.ClientViolatorException;
+import com.nexus.payment.processing.exceptions.ClientViolatorException;
 import com.nexus.payment.processing.model.Client;
 import com.nexus.payment.processing.model.PendingOrder;
 import com.nexus.payment.processing.model.UnpaidOrder;

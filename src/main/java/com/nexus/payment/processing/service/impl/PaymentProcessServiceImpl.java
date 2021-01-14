@@ -1,7 +1,9 @@
 package com.nexus.payment.processing.service.impl;
 
 import com.nexus.payment.processing.dao.PaymentProcessDao;
-import com.nexus.payment.processing.exception.ClientNotFoundException;
+import com.nexus.payment.processing.exceptions.ClientNotFoundException;
+import com.nexus.payment.processing.exceptions.ErrorCode;
+import com.nexus.payment.processing.exceptions.ErrorMetaData;
 import com.nexus.payment.processing.model.PendingOrder;
 import com.nexus.payment.processing.model.UnpaidOrder;
 import com.nexus.payment.processing.service.PaymentAPIStatus;
@@ -11,6 +13,7 @@ import com.nexus.payment.processing.service.ThirdPartyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -91,7 +94,10 @@ public class PaymentProcessServiceImpl implements PaymentProcessService {
     private void CheckIfClientExists(Long clientId) {
         if(!paymentProcessDao.checkIfClientExistByLockingRecord(clientId)){
             // Client doesn't exists, Throw exception which will be caught and processed by Controller advice #PaymentProcessControllerAdvice.class
-            throw new ClientNotFoundException(clientId);
+            throw new ClientNotFoundException(clientId, new Exception("Client not found"), ErrorMetaData.builder()
+                    .code(ErrorCode.CLIENT_NOT_FOUND_ERROR)
+                    .source(ErrorMetaData.Source.DATABASE)
+                    .category(HttpStatus.NOT_FOUND.value()).build());
         }
     }
 }

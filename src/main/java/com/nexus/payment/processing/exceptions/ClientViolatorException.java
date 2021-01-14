@@ -1,4 +1,4 @@
-package com.nexus.payment.processing.exception;
+package com.nexus.payment.processing.exceptions;
 
 public class ClientViolatorException extends RuntimeException {
 
