@@ -1,5 +1,6 @@
 package com.nexus.payment.processing.service.impl;
 
+import com.examples.asserts.AssertUtil;
 import com.nexus.payment.processing.dao.PaymentProcessDao;
 import com.nexus.payment.processing.exceptions.ClientNotFoundException;
 import com.nexus.payment.processing.exceptions.ErrorCode;
@@ -92,12 +93,13 @@ public class PaymentProcessServiceImpl implements PaymentProcessService {
      * @param clientId
      */
     private void CheckIfClientExists(Long clientId) {
-        if(!paymentProcessDao.checkIfClientExistByLockingRecord(clientId)){
-            // Client doesn't exists, Throw exception which will be caught and processed by Controller advice #PaymentProcessControllerAdvice.class
-            throw new ClientNotFoundException(clientId, new Exception("Client not found"), ErrorMetaData.builder()
-                    .code(ErrorCode.CLIENT_NOT_FOUND_ERROR)
-                    .source(ErrorMetaData.Source.DATABASE)
-                    .category(HttpStatus.NOT_FOUND.value()).build());
-        }
+
+        ClientNotFoundException clientNotFoundException = new ClientNotFoundException(clientId, new Exception("Client not found"), ErrorMetaData.builder()
+                .code(ErrorCode.CLIENT_NOT_FOUND_ERROR)
+                .source(ErrorMetaData.Source.DATABASE)
+                .category(HttpStatus.NOT_FOUND.value()).build());
+
+        AssertUtil.check(clientId, c -> paymentProcessDao.checkIfClientExistByLockingRecord(c), () -> clientNotFoundException);
+
     }
 }
