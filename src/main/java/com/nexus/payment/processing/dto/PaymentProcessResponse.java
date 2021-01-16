@@ -1,15 +1,12 @@
 package com.nexus.payment.processing.dto;
 
 import com.nexus.payment.processing.model.OrderDetails;
+import java.util.List;
 import lombok.Data;
 
-import java.util.List;
-
-/**
- * REST Payment Process API response dto
- */
+/** REST Payment Process API response dto */
 @Data
 public class PaymentProcessResponse {
-    private String response;
-    private List<OrderDetails> orderDetailsList;
+  private String response;
+  private List<OrderDetails> orderDetailsList;
 }

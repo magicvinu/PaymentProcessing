@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ThirdPartyServiceImpl implements ThirdPartyService {
-    @Override
-    public PaymentAPIStatus paymentApi(UnpaidOrder unpaidOrder) {
-        return PaymentAPIStatus.SUCCESS;
-    }
+  @Override
+  public PaymentAPIStatus paymentApi(UnpaidOrder unpaidOrder) {
+    return PaymentAPIStatus.SUCCESS;
+  }
 }

@@ -3,6 +3,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id 'com.github.sherter.google-java-format' version '0.9'
+//	https://github.com/sherter/google-java-format-gradle-plugin
 }
 
 group = 'com.nexus'
@@ -21,6 +23,9 @@ jacoco {
 repositories {
 	mavenCentral()
 }
+
+build.dependsOn(tasks.googleJavaFormat)
+verifyGoogleJavaFormat.mustRunAfter(tasks.googleJavaFormat)
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
