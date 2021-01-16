@@ -4,6 +4,5 @@ import com.nexus.payment.processing.model.UnpaidOrder;
 
 public interface ThirdPartyService {
 
-    PaymentAPIStatus paymentApi(UnpaidOrder unpaidOrder);
-
+  PaymentAPIStatus paymentApi(UnpaidOrder unpaidOrder);
 }

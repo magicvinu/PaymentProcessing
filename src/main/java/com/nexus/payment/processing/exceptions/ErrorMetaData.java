@@ -11,27 +11,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ErrorMetaData {
 
-    private int category;
-    private ErrorCode code;
-    private Source source;
-    private Severity severity;
-    private Type type;
-    private String message;
+  private int category;
+  private ErrorCode code;
+  private Source source;
+  private Severity severity;
+  private Type type;
+  private String message;
 
-    public enum Source{
-        SOURCE1,
-        SOURCE2,
-        DATABASE
-    }
+  public enum Source {
+    SOURCE1,
+    SOURCE2,
+    DATABASE
+  }
 
-    public enum Type{
-        ERROR,
-        WARNING
-    }
-    public enum Severity{
-        HIGH,
-        MEDIUM,
-        LOW
-    }
+  public enum Type {
+    ERROR,
+    WARNING
+  }
 
+  public enum Severity {
+    HIGH,
+    MEDIUM,
+    LOW
+  }
 }
