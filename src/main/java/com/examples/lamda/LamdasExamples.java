@@ -31,6 +31,7 @@ public class LamdasExamples {
     lamdasExamples.groupByDishTypeAndIsVegetarian();
     lamdasExamples.findNumberOfDishesGroupByDishType();
     lamdasExamples.groupByCaloriesType();
+    lamdasExamples.sortDishComparingUsingCaloriesAndThenComparingByName();
     lamdasExamples.findDishWithHighestCalories();
     lamdasExamples.findDishWithHighestCaloriesForEachDishType();
     lamdasExamples.averageOrSummarizingCalories();
@@ -220,13 +221,22 @@ public class LamdasExamples {
 
   }
 
+  private void sortDishComparingUsingCaloriesAndThenComparingByName() {
+
+    List<Dish> sortDishComparingUsingCaloriesAndThenComparingByName =
+            menu.stream().sorted(Comparator.comparing(Dish::getCalories).thenComparing(Dish::getName)).collect(toList());
+    System.out.println("sortDishComparingUsingCaloriesAndThenComparingByName ===> " + sortDishComparingUsingCaloriesAndThenComparingByName);
+//    sortDishComparingUsingCaloriesAndThenComparingByName ===> [Water, season fruit, prawns, rice, chicken, salmon, french fries, pizza, beef, pork]
+
+  }
   private void findDishWithHighestCalories() {
 
     Optional<Dish> highCalorieDish =
         menu.stream().collect(Collectors.maxBy(Comparator.comparing(Dish::getCalories)));
     System.out.println("highCalorieDish ===> " + highCalorieDish.get());
     //        highCalorieDish ===> pork
-    Optional<Dish> highCalorieDishUsingReduce =
+
+  Optional<Dish> highCalorieDishUsingReduce =
         menu.stream()
             .collect(
                 Collectors.reducing((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
@@ -527,10 +537,10 @@ public class LamdasExamples {
             new Dish("pork", false, 800, Dish.Type.MEAT),
             new Dish("beef", false, 700, Dish.Type.MEAT),
             new Dish("chicken", false, 400, Dish.Type.MEAT),
-            new Dish("french fries", true, 530, Dish.Type.OTHER),
+            new Dish("french fries", true, 550, Dish.Type.OTHER),
             new Dish("rice", true, 350, Dish.Type.OTHER),
             new Dish("season fruit", true, 120, Dish.Type.OTHER),
-            new Dish("pizza", true, 550, Dish.Type.OTHER),
+            new Dish("A1 pizza", true, 550, Dish.Type.OTHER),
             new Dish("prawns", false, 300, Dish.Type.FISH),
             new Dish("Water", true, 0, Dish.Type.OTHER),
             new Dish("salmon", false, 450, Dish.Type.FISH));
